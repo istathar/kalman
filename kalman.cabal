@@ -1,0 +1,30 @@
+cabal-version:       >= 1.10
+name:                kalman
+version:             0.1.1
+synopsis:            Exploring Kalman filters, implemented as folds
+license:             BSD3
+license-file:        LICENCE
+author:              Andrew Cowie <andrew@operationaldynamics.com>
+maintainer:          Andrew Cowie <andrew@operationaldynamics.com>
+copyright:           © 2016 Operational Dynamics Consulting Pty Ltd, and Others
+category:            Text
+tested-with:         GHC == 7.10
+
+build-type:          Simple
+
+                      
+executable           experiment
+  default-language:  Haskell2010
+
+  build-depends:     base,
+                     text
+
+  ghc-options:       -threaded
+                     -Wall
+                     -Wwarn
+                     -fwarn-tabs
+
+  hs-source-dirs:    src
+  main-is:           Experiment.hs
+                      
+-- vim: set tabstop=21 expandtab:
