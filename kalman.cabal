@@ -12,11 +12,11 @@ tested-with:         GHC == 7.10
 
 build-type:          Simple
 
-                      
 executable           experiment
   default-language:  Haskell2010
 
   build-depends:     base,
+                     linear,
                      text
 
   ghc-options:       -threaded
