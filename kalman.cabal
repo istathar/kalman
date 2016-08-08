@@ -12,12 +12,31 @@ tested-with:         GHC == 7.10
 
 build-type:          Simple
 
+library
+  default-language:  Haskell2010
+
+  build-depends:     base,
+                     text
+
+  hs-source-dirs:    lib
+
+  exposed-modules:   Text.Render
+
+  ghc-options:       -O2
+                     -Wall
+                     -Wwarn
+                     -fwarn-tabs
+
+  ghc-prof-options:  -fprof-auto-top
+
+
 executable           experiment
   default-language:  Haskell2010
 
   build-depends:     base,
                      linear,
-                     text
+                     text,
+                     kalman
 
   ghc-options:       -threaded
                      -Wall
