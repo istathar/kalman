@@ -5,32 +5,34 @@ module Main where
 
 import Data.Text (Text)
 import qualified Data.Text.IO as T
-import Linear.Matrix
-import Linear.V2
-import Text.Render
+import Data.Matrix
 
-one :: V2 Int
-one = V2 1 1
+a :: Matrix Float
+a = fromLists [[1,1], [2,2]]
 
-two :: V2 Int
-two = V2 2 2
+b :: Matrix Float
+b = fromLists [[3,3], [4,-5]]
 
-thr :: V2 Int
-thr = V2 3 3
-
-fur :: V2 Int
-fur = V2 4 4
-
-a :: M22 Int
-a = V2 one two
-
-b :: M22 Int
-b = V2 thr fur
+c :: Matrix Float
+c = fromLists [[3,3], [4,4]]
 
 
 main :: IO ()
 main = do
-     putStrLn "Hello"
-     print a
-     print b
-     print $ a !+! b
+    putStrLn "Hello"
+    print a
+    putStrLn (prettyMatrix b)
+    print (a + b)
+    print (multStd2 a b)
+    print (transpose b)
+    case detLaplace b of
+        0 -> putStrLn "b: No inverse"
+        _ -> case inverse b of
+               Left err -> error err
+               Right m  -> print m
+
+    let c' = inverse c
+    case c' of
+               Left err -> putStrLn "c: No inverse"
+               Right m  -> print m
+ 

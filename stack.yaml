@@ -1,1 +1,4 @@
 resolver: nightly-2016-08-06
+packages:
+ - /home/andrew/vcs/haskell/matrix
+ - .
