@@ -16,6 +16,9 @@ b = fromLists [[3,3], [4,-5]]
 c :: Matrix Float
 c = fromLists [[3,3], [4,4]]
 
+d :: Matrix Float
+d = fromLists [[3,3,3], [4,-5,-1], [1,4,9]]
+
 
 main :: IO ()
 main = do
@@ -36,3 +39,6 @@ main = do
                Left err -> putStrLn "c: No inverse"
                Right m  -> print m
  
+    print d
+    print (transpose d)
+    print (d * transpose d)
