@@ -36,6 +36,7 @@ executable           experiment
   build-depends:     base,
                      matrix,
                      text,
+                     criterion,
                      kalman
 
   ghc-options:       -threaded
@@ -43,7 +44,32 @@ executable           experiment
                      -Wwarn
                      -fwarn-tabs
 
-  hs-source-dirs:    src
+  hs-source-dirs:    tests
   main-is:           Experiment.hs
+
+
+benchmark            bench
+  default-language:  Haskell2010
+  type:              exitcode-stdio-1.0
+
+  build-depends:     base,
+                     bytestring,
+                     transformers,
+                     mtl,
+                     criterion,
+                     matrix,
+                     hmatrix
+
+  ghc-options:       -threaded
+                     -Wall
+                     -Wwarn
+                     -fwarn-tabs
+
+  hs-source-dirs:    tests
+  main-is:           ComparisonBenchmark.hs
+  other-modules:     PureMatrixCalculation
+                     WrappedBlasLapackCalculation
+                     SampleMatrixData
+                      
                       
 -- vim: set tabstop=21 expandtab:
