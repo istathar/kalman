@@ -19,7 +19,7 @@ import Data.Matrix -- matrix package
 
 import SampleMatrixData
 
-d :: Matrix Float
+d :: Matrix Double
 d = fromLists threeByThree
 
 main :: IO ()
@@ -28,18 +28,18 @@ main = do
         print $ sampleViaMatrix i
 
 
-sampleViaMatrix :: Int -> Matrix Float
+sampleViaMatrix :: Int -> Matrix Double
 sampleViaMatrix n = foldl' nonsense d [1..n]
 
 nonsense :: (Ord a, Fractional a) => Matrix a -> Int -> Matrix a
-nonsense x _ = normalize (x * transpose x) * i
-  where
-    i = case inverse x of
-            Left _       -> identity (nrows x)
-            Right result -> result
+nonsense x _ = normalize (x * transpose x)
 
 normalize :: (Ord a, Fractional a) => Matrix a -> Matrix a
 normalize x = scaleMatrix (recip factor) x
   where
     factor = maximum x
-    
+
+inv :: (Fractional a, Ord a) => Matrix a -> Matrix a
+inv x = case inverse x of
+            Left err     -> error err
+            Right result -> result

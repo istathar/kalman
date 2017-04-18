@@ -27,7 +27,7 @@ main = do
     GHC.Conc.setNumCapabilities 4
     defaultMain
        [ bench "matrix  (native Haskell code)" (whnf sampleViaMatrix 3)
+       , bench "hmatrix (wrapper around BLAS/LAPACK)" (whnf sampleViaBlasLapack 3)
        ]
---     , bench "hmatrix (wrapper around BLAS/LAPACK" sampleViaBlasLapack
     putStrLn "Complete."
 
