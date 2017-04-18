@@ -24,11 +24,22 @@ d = fromLists threeByThree
 
 main :: IO ()
 main = do
-    print $ sampleViaMatrix 1024
+    forM_ [1..5] $ \i -> do
+        print $ sampleViaMatrix i
+
 
 sampleViaMatrix :: Int -> Matrix Float
 sampleViaMatrix n = foldl' nonsense d [1..n]
 
-nonsense :: Num a => Matrix a -> Int -> Matrix a
-nonsense x _ = x * transpose x
+nonsense :: (Ord a, Fractional a) => Matrix a -> Int -> Matrix a
+nonsense x _ = normalize (x * transpose x) * i
+  where
+    i = case inverse x of
+            Left _       -> identity (nrows x)
+            Right result -> result
 
+normalize :: (Ord a, Fractional a) => Matrix a -> Matrix a
+normalize x = scaleMatrix (recip factor) x
+  where
+    factor = maximum x
+    
