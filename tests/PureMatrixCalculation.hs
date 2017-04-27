@@ -8,38 +8,30 @@
 -- redistribute it and/or modify it under a BSD licence.
 --
 
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE BangPatterns #-}
-{-# OPTIONS -fno-warn-unused-imports #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE InstanceSigs #-}
 
-module PureMatrixCalculation (sampleViaMatrix) where
+module PureMatrixCalculation
+(
+    createFrom
+) where
 
-import Data.Foldable
-import Data.Matrix -- matrix package
+import Data.Matrix (Matrix)
+import qualified Data.Matrix as Matrix
 
+import MatrixTest
 import SampleMatrixData
 
-d :: Matrix Double
-d = fromLists threeByThree
+createFrom :: [[a]] -> Matrix a
+createFrom elements = Matrix.fromLists elements
 
-main :: IO ()
-main = do
-    forM_ [1..5] $ \i -> do
-        print $ sampleViaMatrix i
-
-
-sampleViaMatrix :: Int -> Matrix Double
-sampleViaMatrix n = foldl' nonsense d [1..n]
-
-nonsense :: (Ord a, Fractional a) => Matrix a -> Int -> Matrix a
-nonsense x _ = normalize (x * transpose x)
-
-normalize :: (Ord a, Fractional a) => Matrix a -> Matrix a
-normalize x = scaleMatrix (recip factor) x
-  where
-    factor = maximum x
-
-inv :: (Fractional a, Ord a) => Matrix a -> Matrix a
-inv x = case inverse x of
-            Left err     -> error err
-            Right result -> result
+instance (Num a, Fractional a, Ord a) => Calculator Matrix a where
+    transpose x = Matrix.transpose x
+    multiply x1 x2 = Matrix.multStd2 x1 x2
+    identity = Matrix.identity
+    inverse x = case Matrix.inverse x of
+        Left err     -> error err
+        Right result -> result
+    scale factor x = Matrix.scaleMatrix factor x
+    create = Matrix.fromLists
