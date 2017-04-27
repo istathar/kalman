@@ -8,12 +8,14 @@ module MatrixTest where
 -- without it (due to multiply :: c a -> ...) but I left it in for clarity.
 --
 
-class Num a => Calculator (c :: * -> *) a where
+class (Num a, Fractional a, Ord a, Foldable c) =>
+    Calculator (c :: * -> *) a
+  where
     multiply :: c a -> c a -> c a
     transpose :: c a -> c a
-    inverse :: (Fractional a, Ord a) => c a -> c a
+    inverse :: c a -> c a
     identity :: Int -> c a
-    scale :: Fractional a => a -> c a -> c a
+    scale :: a -> c a -> c a
     create :: [[a]] -> c a
 
 

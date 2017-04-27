@@ -14,7 +14,7 @@
 
 module PureMatrixCalculation
 (
-    createFrom
+    createPureFrom
 ) where
 
 import Data.Matrix (Matrix)
@@ -23,8 +23,8 @@ import qualified Data.Matrix as Matrix
 import MatrixTest
 import SampleMatrixData
 
-createFrom :: [[a]] -> Matrix a
-createFrom elements = Matrix.fromLists elements
+createPureFrom :: [[a]] -> Matrix a
+createPureFrom elements = Matrix.fromLists elements
 
 instance (Num a, Fractional a, Ord a) => Calculator Matrix a where
     transpose x = Matrix.transpose x
